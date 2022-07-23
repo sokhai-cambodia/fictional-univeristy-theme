@@ -28,13 +28,30 @@
         <?php }
       ?>
 
-      <!-- <div class="page-links">
-        <h2 class="page-links__title"><a href="#">About Us</a></h2>
+      <?php 
+        $childrenPages = get_pages(array(
+          'child_of' => get_the_ID()
+        ));
+        if($parentId || $childrenPages) { 
+      ?>
+      <div class="page-links">
+        <h2 class="page-links__title"><a href="<?= get_permalink($parentId) ?>"><?= get_the_title($parentId) ?></a></h2>
         <ul class="min-list">
-          <li class="current_page_item"><a href="#">Our History</a></li>
-          <li><a href="#">Our Goals</a></li>
+          <?php
+            $findChildrenOf = $parentId;
+            if (!$findChildrenOf) {
+              $findChildrenOf = get_the_ID();
+            }
+            wp_list_pages(array(
+              'title_li' => NULL,
+              'child_of' => $findChildrenOf,
+              'sort_column' => 'menu_order'
+            ));
+          ?>
         </ul>
-      </div> -->
+      </div>
+
+      <?php } ?>
 
       <div class="generic-content">
         <?php the_content(); ?>
