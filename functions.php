@@ -32,6 +32,22 @@ function university_post_types() {
     ),
     'menu_icon' => 'dashicons-calendar'
   ));
+
+  register_post_type('program', array(
+    'show_in_rest' => true,
+    'supports' => array('title', 'editor'),
+    'rewrite' => array('slug' => 'programs'),
+    'public' => true,
+    'has_archive' => true,
+    'labels' => array(
+      'name' => 'Programs',
+      'singular_name' => 'Program',
+      'add_new_item' => 'Add Program',
+      'edit_item' => 'Edit Program',
+      'all_items' => 'All Programs',
+    ),
+    'menu_icon' => 'dashicons-welcome-widgets-menus'
+  ));
 }
 
 add_action('init', 'university_post_types');
