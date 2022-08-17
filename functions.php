@@ -18,7 +18,11 @@ add_action('after_setup_theme', 'university_features');
 
 function university_post_types() {
   register_post_type('event', array(
+    'show_in_rest' => true,
+    'supports' => array('title', 'editor', 'excerpt'),
+    'rewrite' => array('slug' => 'events'),
     'public' => true,
+    'has_archive' => true,
     'labels' => array(
       'name' => 'Events',
       'singular_name' => 'Event',
@@ -31,3 +35,23 @@ function university_post_types() {
 }
 
 add_action('init', 'university_post_types');
+
+
+function university_adjust_queries($query) {
+  if (!is_admin() && is_post_type_archive('event') && $query->is_main_query()) {
+    $today = date('Ymd');
+    $query->set('meta_key', 'event_date');
+    $query->set('orderby', 'meta_value_num');
+    $query->set('order', 'ASC');
+    $query->set('meta_query', array(
+      array(
+        'key' => 'event_date',
+        'compare' => '>=',
+        'value' => $today,
+        'type' => 'numeric'
+      )
+    ));
+  }
+}
+
+add_action('pre_get_posts', 'university_adjust_queries');
