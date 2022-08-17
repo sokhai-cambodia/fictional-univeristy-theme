@@ -15,3 +15,19 @@ function university_features() {
 }
 
 add_action('after_setup_theme', 'university_features');
+
+function university_post_types() {
+  register_post_type('event', array(
+    'public' => true,
+    'labels' => array(
+      'name' => 'Events',
+      'singular_name' => 'Event',
+      'add_new_item' => 'Add Event',
+      'edit_item' => 'Edit Event',
+      'all_items' => 'All Events',
+    ),
+    'menu_icon' => 'dashicons-calendar'
+  ));
+}
+
+add_action('init', 'university_post_types');
