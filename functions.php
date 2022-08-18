@@ -1,4 +1,5 @@
 <?php
+require get_theme_file_path('/includes/rest_api.php');
 
 function the_page_banner($args = null) {
   if(!$args['title']) {
